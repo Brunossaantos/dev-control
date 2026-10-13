@@ -1,0 +1,9 @@
+{
+  "name": "dev-control",
+  "version": "0.1.0",
+  "description": "Universal Claude Code mod: usage alerts, terminal/sound/desktop notifications, honest Zen progress, project profiles, themes and an agent panel.",
+  "author": {
+    "name": "Dev Control contributors"
+  },
+  "types": "./types/index.d.ts"
+}

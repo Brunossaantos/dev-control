@@ -1,0 +1,127 @@
+{
+  "success": true,
+  "strict": true,
+  "target": "dev-control/plugins/dev-control/.claude-plugin/plugin.json",
+  "manifest": {
+    "file": "dev-control/plugins/dev-control/.claude-plugin/plugin.json",
+    "type": "plugin",
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "types ./types/index.d.ts declares on $: nothing (no EngineInterface member)",
+      "types ./types/index.d.ts declares state: dev-control.controls, dev-control.effortForSubagents, dev-control.menu, dev-control.zenOn, dev-control.zenTheme, dev-control.zenCustom, dev-control.zenCollapsed, dev-control.task, dev-control.now, dev-control.themes, dev-control.themeName, dev-control.themeQuery, dev-control.themeStatus, dev-control.effort, dev-control.mode, dev-control.defaultMode, dev-control.preview, dev-control.isDownloading, dev-control.statusOn, dev-control.status, dev-control.lastResponseAt, dev-control.statusClock, dev-control.sessionEffort, dev-control.sessionModel, dev-control.paneBg, dev-control.defaultModeChosen"
+    ],
+    "gatingHooks": []
+  },
+  "contents": [
+    {
+      "file": "dev-control/plugins/dev-control/hooks/hooks.json",
+      "type": "hooks",
+      "errors": [],
+      "warnings": [],
+      "notes": [
+        "./register.tsx hooks: agent.spawn, classic.Notification, tool.call, session.end, session.start, command.run{command=dev-control}, ui.render{component=Pane, requestId=dev-control-tools}, ui.close{id=dev-control-tools}, ui.focus{requestId=dev-control-tools}, ui.scroll{requestId=dev-control-tools}, ui.render{component=PromptHint}, ui.render{component=AbovePrompt}, ui.render{component=ToolUse}, ui.render{component=ToolResult}, ui.render{component=ToolGroup}, ui.render{component=ToolProgress}, prompt.submit, tool.call{tool=mcp__dev-control__zen_progress}, tool.call{tool=TodoWrite}, tool.call{tool=TaskCreate}, tool.call{tool=TaskUpdate}, turn.complete, turn.step, classic.UserPromptSubmit, classic.PostToolUse",
+        "./register.tsx answers its own command: command.run{command=dev-control}",
+        "./register.tsx gating hook without .catch: agent.spawn",
+        "./register.tsx gating hook without .catch: classic.Notification",
+        "./register.tsx gating hook without .catch: tool.call",
+        "./register.tsx gating hook with .catch: ui.close{id=dev-control-tools}",
+        "./register.tsx gating hook with .catch: ui.focus{requestId=dev-control-tools}",
+        "./register.tsx gating hook with .catch: ui.scroll{requestId=dev-control-tools}",
+        "./register.tsx gating hook with .catch: prompt.submit",
+        "./register.tsx gating hook without .catch: tool.call{tool=mcp__dev-control__zen_progress}",
+        "./register.tsx gating hook with .catch: tool.call{tool=TodoWrite}",
+        "./register.tsx gating hook with .catch: tool.call{tool=TaskCreate}",
+        "./register.tsx gating hook with .catch: tool.call{tool=TaskUpdate}",
+        "./register.tsx gating hook with .catch: classic.UserPromptSubmit",
+        "./register.tsx gating hook with .catch: classic.PostToolUse",
+        "./register.tsx calls: $.agent.list (via refreshAgents), $.audio.play (via sendNotice), $.clock.after, $.clock.every, $.clock.now, $.command.register, $.command.run (via openTasks, setModel), $.config.list, $.config.set (via selectClaudeTheme), $.env.get (via homeDir, isWindows, loadSessionEffort, paintWindowsTerminal, sendNotice, terminalBackground, wtSettingsPath), $.fs.exists (via indexThemes, paintWindowsTerminal, setDefaultMode, setStatusOn, writeThemeSetting, wtSettingsPath), $.fs.list (via indexThemes), $.fs.read (via indexThemes, loadThemes, paintTerminal, paintWindowsTerminal, setDefaultMode, setStatusOn, terminalBackground, writeThemeSetting, wtSettingsPath), $.fs.write (via downloadThemes, paintTerminal, paintWindowsTerminal, setDefaultMode, setStatusOn, writeThemeSetting), $.http.fetch (via fetchText), $.process.run (via refreshStatus, sendNotice), $.prompt.fill (via queueHandoff), $.prompt.read (via queueHandoff), $.session.cwd (via loadControl, refreshStatus), $.session.id\u2026 [+552 chars]",
+        "./register.tsx env writes: nothing",
+        "./register.tsx env reads: CLAUDE_EFFORT, HOME, LOCALAPPDATA, OS, USERPROFILE, WSL_DISTRO_NAME, WT_PROFILE_ID",
+        "./register.tsx state writes: dev-control.controls, dev-control.defaultMode, dev-control.defaultModeChosen, dev-control.effort, dev-control.effortForSubagents, dev-control.isDownloading, dev-control.lastResponseAt, dev-control.menu, dev-control.mode, dev-control.now, dev-control.paneBg, dev-control.preview, dev-control.sessionEffort, dev-control.sessionModel, dev-control.status, dev-control.statusClock, dev-control.statusOn, dev-control.task, dev-control.themeName, dev-control.themeQuery, dev-control.themeStatus, dev-control.themes, dev-control.zenCollapsed, dev-control.zenCustom, dev-control.zenOn, dev-control.zenTheme",
+        "./register.tsx state reads: dev-control.controls, dev-control.defaultMode, dev-control.defaultModeChosen, dev-control.effort, dev-control.effortForSubagents, dev-control.isDownloading, dev-control.lastResponseAt, dev-control.menu, dev-control.mode, dev-control.now, dev-control.paneBg, dev-control.preview, dev-control.sessionEffort, dev-control.sessionModel, dev-control.status, dev-control.statusClock, dev-control.statusOn, dev-control.task, dev-control.themeName, dev-control.themeQuery, dev-control.themeStatus, dev-control.themes, dev-control.zenCollapsed, dev-control.zenCustom, dev-control.zenOn, dev-control.zenTheme"
+      ],
+      "gatingHooks": [
+        {
+          "module": "./register.tsx",
+          "pattern": "agent.spawn",
+          "hook": "agent.spawn",
+          "hasCatch": false
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "classic.Notification",
+          "hook": "classic.Notification",
+          "hasCatch": false
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call",
+          "hasCatch": false
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "ui.close",
+          "hook": "ui.close{id=dev-control-tools}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "ui.focus",
+          "hook": "ui.focus{requestId=dev-control-tools}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "ui.scroll",
+          "hook": "ui.scroll{requestId=dev-control-tools}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "prompt.submit",
+          "hook": "prompt.submit",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=mcp__dev-control__zen_progress}",
+          "hasCatch": false
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TodoWrite}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TaskCreate}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TaskUpdate}",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "classic.UserPromptSubmit",
+          "hook": "classic.UserPromptSubmit",
+          "hasCatch": true
+        },
+        {
+          "module": "./register.tsx",
+          "pattern": "classic.PostToolUse",
+          "hook": "classic.PostToolUse",
+          "hasCatch": true
+        }
+      ]
+    }
+  ],
+  "advice": []
+}

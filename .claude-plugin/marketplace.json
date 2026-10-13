@@ -1,0 +1,17 @@
+{
+  "name": "dev-control-mods",
+  "owner": {
+    "name": "Dev Control contributors"
+  },
+  "plugins": [
+    {
+      "name": "dev-control",
+      "source": "./plugins/dev-control",
+      "description": "Usage monitoring, notifications, Zen, profiles, themes and agents.",
+      "version": "0.1.0"
+    }
+  ],
+  "metadata": {
+    "description": "Universal Claude Code controls for usage, notifications, Zen, profiles, themes and agents."
+  }
+}
