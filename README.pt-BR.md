@@ -1,6 +1,6 @@
 # Dev Control
 
-**Versão 0.2.1 · Projeto de Bruno · desenvolvido com assistência de IA**
+**Versão 0.2.2 · Projeto de Bruno · [GitHub: Brunossaantos](https://github.com/Brunossaantos)**
 
 Um painel universal para acompanhar o Claude Code em qualquer projeto. Reúne consumo, notificações, progresso, perfis, temas e agentes, sem impor um processo de trabalho.
 

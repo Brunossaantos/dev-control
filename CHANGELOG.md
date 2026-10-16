@@ -1,5 +1,9 @@
 # Histórico de alterações
 
+## 0.2.2 — 2026-10-16
+
+- Substitui a frase sobre assistência de IA pelo GitHub de Bruno na tela inicial e nos READMEs.
+
 ## 0.2.1 — 2026-10-16
 
 - Interface, estados, níveis de esforço, notificações e documentação em português.

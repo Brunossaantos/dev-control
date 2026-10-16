@@ -246,7 +246,7 @@ async function drawPanel($: Host, e: RenderInput<'Pane'>) {
     hint('intro', 'Consumo, foco e notificações para qualquer projeto.'),
     ...([['usage', 'Monitor de consumo'], ['notices', 'Notificações'], ['focus', 'Zen / foco'], ['appearance', 'Temas'], ['model', 'Modelo e permissões'], ['profiles', 'Perfis de projeto'], ['agents', 'Monitor de agentes']] as const)
       .map(([page, title]) => button(`nav-${page}`, `${title}  →`, () => visit($, page))),
-    hint('author', 'Dev Control 0.2.1 · Bruno · desenvolvido com assistência de IA'),
+    hint('author', 'Dev Control 0.2.2 · Bruno · github.com/Brunossaantos'),
   ]
   if (s.screen === 'usage') rows = [
     hint('usage-info', 'Contexto é o tamanho da conversa; os limites da conta vêm da última resposta da API.'),
