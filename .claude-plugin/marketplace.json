@@ -10,7 +10,7 @@
     {
       "name": "dev-control",
       "source": "./plugins/dev-control",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "description": "Painel universal em português para Claude Code: consumo, notificações, foco, temas, perfis e agentes."
     }
   ]

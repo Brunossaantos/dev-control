@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'claude-code/testing'
-import { defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, jsonc, PALETTES, shade } from '../hooks/domain'
+import { defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, jsonc, PALETTES, shade, meter } from '../hooks/domain'
 import type { Plan } from '../types'
 
 describe('preferências e aparência', () => {
@@ -87,5 +87,19 @@ describe('estados de progresso', () => {
     expect(steps([null, { title: 'A', state: 'invalid' }])).toEqual([{ title: 'A', state: 'pending' }])
     expect(failure({ exitCode: 1 })).toBe(true); expect(failure({ exitCode: 0 })).toBe(false)
     expect(failure({ interrupted: true })).toBe(true)
+  })
+})
+
+describe('barras de consumo', () => {
+  test('barras representam limites, valores intermediários e dados ausentes', () => {
+    expect(meter(0, 4)).toBe('░░░░ 0%')
+    expect(meter(50, 4)).toBe('██░░ 50%')
+    expect(meter(99, 4)).toBe('███░ 99%')
+    expect(meter(100, 4)).toBe('████ 100%')
+    expect(meter(120, 4)).toBe('████ 100%')
+    expect(meter(-10, 4)).toBe('░░░░ 0%')
+    expect(meter(null)).toBe('n/d')
+    expect(meter(undefined)).toBe('n/d')
+    expect(meter(NaN)).toBe('n/d')
   })
 })

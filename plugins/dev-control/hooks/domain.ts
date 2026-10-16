@@ -144,3 +144,12 @@ export function label(value: string): string {
   }
   return labels[value] ?? value
 }
+
+// Sem leitura, mostra indisponibilidade em vez de simular consumo zero.
+export function meter(value: number | null | undefined, cells = 8): string {
+  if (value == null || !Number.isFinite(value)) return 'n/d'
+  const percent = Math.min(100, Math.max(0, value))
+  const width = Math.min(20, Math.max(1, Number.isFinite(cells) ? Math.trunc(cells) : 8))
+  const filled = percent === 100 ? width : Math.floor(percent * width / 100)
+  return `${'█'.repeat(filled)}${'░'.repeat(width - filled)} ${Math.round(percent)}%`
+}

@@ -93,7 +93,7 @@ describe('interações do painel', () => {
     await control.press({ key: 'dashboard-open' }); await body.press({ key: 'nav-focus' }); await body.press({ key: 'focus-toggle' })
     await $.tool.call({ tool: 'mcp__dev-control__progress_report', title: 'Work', steps: [{ title: 'Read', state: 'done' }, { title: 'Test', state: 'pending' }] })
     await $.turn.complete({ turnId: 'child-turn', agentId: 'worker1', answer: 'Worker result', reason: 'answer', durationMs: 1, isAborted: false })
-    expect(await band.find({ text: /Em andamento · 50%/ })).toBeDefined()
+    expect(await band.find({ text: /Em andamento · 50% · ████░░░░/ })).toBeDefined()
     await $.turn.complete({ turnId: 'main-turn', answer: 'Need input', reason: 'answer', durationMs: 10, isAborted: false })
     expect(await band.find({ text: /Aguardando · 50%/ })).toBeDefined()
   })
@@ -212,5 +212,25 @@ describe('persistência e notificações', () => {
     await body.press({ key: 'save-project' })
     expect(await body.find({ text: 'Perfil carregado: projeto' })).toBeDefined()
     expect(f.messages).toContain('Preferências salvas: projeto.')
+  })
+})
+
+describe('exibição das barras', () => {
+  test('consumo mostra barras no painel e na linha de status das duas superfícies', async ($, on) => {
+    setup(on, { usage: () => ({ context: { percent: 50, tokens: 100000, window: 200000 }, rateLimits: [
+      { kind: 'five_hour', percentUsed: 75 }, { kind: 'seven_day', percentUsed: 100 },
+    ] }) })
+    await $.session.start({ surface: 'terminal', isInteractive: true, cwd: '/demo' })
+    for (const surface of ['terminal', 'desktop'] as const) {
+      const status = await $.ui.mount({ plugin: 'dev-control', surface, ...hint })
+      expect(await status.find({ text: /Contexto ██░░░ 50%/ })).toBeDefined()
+      expect(await status.find({ text: /5h ███░░ 75%/ })).toBeDefined()
+      expect(await status.find({ text: /7 dias █████ 100%/ })).toBeDefined()
+      const body = await $.ui.mount({ plugin: 'dev-control', surface, ...panel })
+      await $.command.run({ command: 'dev-control', args: 'consumo' })
+      expect(await body.find({ text: 'Contexto: ████░░░░ 50%' })).toBeDefined()
+      await body.press({ key: 'close' })
+      await status.unmount(); await body.unmount()
+    }
   })
 })

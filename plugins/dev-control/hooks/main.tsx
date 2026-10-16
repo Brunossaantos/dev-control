@@ -1,7 +1,7 @@
 import { atom, read, update } from 'claude-code'
 import type { Register, EngineInterface, RenderInput, RenderChildren, Timer } from 'claude-code'
 import type { Screen, Preferences, Dashboard, Usage, Worker, Plan, SavedPreferences, AlertMemory, Palette, WindowsRestore } from '../types'
-import { blank, defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, PALETTES, shade, jsonc, hex, label, CONTINUITY } from './domain'
+import { blank, defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, PALETTES, shade, jsonc, hex, label, meter, CONTINUITY } from './domain'
 
 const state = atom({ plugin: 'dev-control', key: 'dashboard' } as const, blank())
 const PANEL = 'dc-dashboard'
@@ -246,11 +246,11 @@ async function drawPanel($: Host, e: RenderInput<'Pane'>) {
     hint('intro', 'Consumo, foco e notificações para qualquer projeto.'),
     ...([['usage', 'Monitor de consumo'], ['notices', 'Notificações'], ['focus', 'Zen / foco'], ['appearance', 'Temas'], ['model', 'Modelo e permissões'], ['profiles', 'Perfis de projeto'], ['agents', 'Monitor de agentes']] as const)
       .map(([page, title]) => button(`nav-${page}`, `${title}  →`, () => visit($, page))),
-    hint('author', 'Dev Control 0.2.2 · Bruno · github.com/Brunossaantos'),
+    hint('author', 'Dev Control 0.2.3 · Bruno · github.com/Brunossaantos'),
   ]
   if (s.screen === 'usage') rows = [
     hint('usage-info', 'Contexto é o tamanho da conversa; os limites da conta vêm da última resposta da API.'),
-    ...['context', '5h', '7d'].map(key => { const r = s.usage?.readings.find(v => v.key === key); return <Text key={`metric-${key}`}>{label(key)}: {r?.value == null ? 'indisponível' : `${Math.round(r.value)}%`}{key !== 'context' && r ? ` · renova em ${remaining(r.reset, time)}` : ''}</Text> }),
+    ...['context', '5h', '7d'].map(key => { const r = s.usage?.readings.find(v => v.key === key); return <Text key={`metric-${key}`}>{label(key)}: {r?.value == null ? 'indisponível' : meter(r.value)}{key !== 'context' && r ? ` · renova em ${remaining(r.reset, time)}` : ''}</Text> }),
     hint('tokens', `Tokens: ${numberLabel(s.usage?.tokens ?? null)} / ${numberLabel(s.usage?.window ?? null)}`),
     hint('checked', s.usage ? `Leitura verificada há ${Math.max(0, Math.floor((time - s.usage.checked) / 1000))}s` : 'Nenhuma leitura disponível'),
     hint('cache-age', s.lastReply === null ? 'Idade do cache: não observada' : `Idade estimada do cache: ${Math.floor(Math.max(0, time - s.lastReply) / 60000)}m · ${time - s.lastReply < 3600000 ? '~recente' : '~mais de uma hora'}. Isso não comprova reutilização do cache.`),
@@ -319,16 +319,21 @@ async function drawPanel($: Host, e: RenderInput<'Pane'>) {
 }
 async function drawStatus($: Host, e: RenderInput<'PromptHint'>) {
   const { Box, Text, Button } = $.ui.resolve(e); const s = await read($, state)
-  const fields = ['context', '5h', '7d'].map(key => { const r = s.usage?.readings.find(v => v.key === key); return `${label(key)} ${r?.value == null ? 'n/d' : `${Math.round(r.value)}%`}` }).join(' · ')
+  const columns = e.viewport?.columns ?? 100
+  const narrow = columns < 70
+  const fields = ['context', '5h', '7d'].map(key => {
+    const r = s.usage?.readings.find(v => v.key === key)
+    return `${key === 'context' ? 'Contexto' : key === '7d' ? '7 dias' : key} ${meter(r?.value, columns > 110 ? 8 : 5)}`
+  }).join(narrow ? '\n' : ' · ')
   const head = s.usage ? `${s.usage.model} · ${s.usage.directory.split(/[\\/]/).filter(Boolean).at(-1)}${s.usage.branch ? ` · ${s.usage.branch}` : ''}` : 'Aguardando dados de consumo'
-  return <Box flexGrow={1} justifyContent="space-between" gap={1}><Text wrap="truncate">{(e.viewport?.columns ?? 100) > 110 ? `${head} │ ` : ''}{fields}{s.error ? ' · desatualizado' : ''}</Text>
+  return <Box flexGrow={1} flexDirection={narrow ? 'column' : 'row'} justifyContent="space-between" gap={1}><Text>{columns > 160 ? `${head} │ ` : ''}{fields}{s.error ? ' · desatualizado' : ''}</Text>
     <Button key="dashboard-open" plain label="◆ Dev Control" onPress={() => s.screen === null ? open($) : close($)} /></Box>
 }
 async function drawProgress($: Host, e: RenderInput<'AbovePrompt'>) {
   const s = await read($, state); if (!s.prefs.focus || !s.plan || e.props.hasSurvey) return null
   const { Box, Text, Button } = $.ui.resolve(e); const p = s.plan; const percent = percentage(p)
   return <Box flexDirection="column" borderStyle="round" borderColor="claude" paddingX={1}>
-    <Box justifyContent="space-between"><Text bold>{p.title}</Text><Text>{label(p.state)} · {percent === null ? 'n/d' : `${percent}%`}</Text></Box>
+    <Box justifyContent="space-between"><Text bold>{p.title}</Text><Text>{label(p.state)} · {percent === null ? 'n/d' : `${percent}% · ${meter(percent).split(' ')[0]}`}</Text></Box>
     {p.steps.slice(0, 5).map((step, i) => <Text key={`progress-${i}`} color={step.state === 'error' ? 'error' : step.state === 'active' ? 'claude' : undefined}>{label(step.state)}: {step.title}</Text>)}
     {p.steps.length > 5 && <Text dimColor>{p.steps.length - 5} outras etapas no painel</Text>}
     <Button key="progress-details" plain label={s.prefs.details ? 'Recolher detalhes' : 'Mostrar detalhes'} onPress={() => patchPreferences($, { details: !s.prefs.details })} />

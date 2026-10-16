@@ -1,6 +1,6 @@
 # Dev Control
 
-**Versão 0.2.2 · Projeto de Bruno · [GitHub: Brunossaantos](https://github.com/Brunossaantos)**
+**Versão 0.2.3 · Projeto de Bruno · [GitHub: Brunossaantos](https://github.com/Brunossaantos)**
 
 Um painel universal para acompanhar o Claude Code em qualquer projeto. Reúne consumo, notificações, progresso, perfis, temas e agentes, sem impor um processo de trabalho.
 
@@ -38,7 +38,7 @@ O uso do plugin não exige Node.js, npm ou Python separados. O som vem incluído
 | Perfis de projeto | Preferências por projeto ou globais. |
 | Monitor de agentes | Agentes reais, tarefas, estado, modelo, esforço e resultado observado. |
 
-A linha de status mostra contexto e limites, com modelo, pasta e ramificação Git quando há espaço. O plugin preserva o comando de status que o usuário já tenha configurado.
+O painel de consumo e a linha de status mostram barras proporcionais ao uso de contexto e limites. Leituras ausentes aparecem como `n/d`, sem simular consumo zero. Em terminais estreitos, a linha de status divide as métricas em linhas. A linha de status mostra contexto e limites, com modelo, pasta e ramificação Git quando há espaço. O plugin preserva o comando de status que o usuário já tenha configurado.
 
 ## Notificações
 

@@ -1,5 +1,11 @@
 # Histórico de alterações
 
+## 0.2.3 — 2026-10-16
+
+- Restaura barras proporcionais de contexto e limites no painel e na linha de status.
+- Ajusta a exibição em terminais estreitos e inclui barra no progresso das tarefas.
+- Dados ausentes continuam identificados como indisponíveis.
+
 ## 0.2.2 — 2026-10-16
 
 - Substitui a frase sobre assistência de IA pelo GitHub de Bruno na tela inicial e nos READMEs.

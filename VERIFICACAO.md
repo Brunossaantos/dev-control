@@ -1,11 +1,11 @@
-# Verificação — Dev Control 0.2.2
+# Verificação — Dev Control 0.2.3
 
 Ambiente: Linux, Claude Code 2.1.296. Validação e testes executados pelas ferramentas oficiais do produto.
 
 - Plugin e marketplace: validação estrita aprovada.
-- Instalação local da base 0.2.0: aprovada em configuração isolada; a versão 0.2.2 mantém o mesmo formato.
+- Instalação local da base 0.2.0: aprovada em configuração isolada; a versão 0.2.3 mantém o mesmo formato.
 - Verificação do pacote: sem referências ao autor/projeto anterior e sem arquivos de código idênticos aos da base anterior.
-- Testes: **34 aprovados, 0 falhas**, em dois arquivos escritos para esta implementação, incluindo atalhos em português e valores nativos de permissão.
+- Testes: **36 aprovados, 0 falhas**, em dois arquivos escritos para esta implementação, incluindo barras de consumo e progresso, atalhos em português e valores nativos de permissão.
 - Cobertura: preferências, cores, JSONC, faixas de consumo, renovações, compactação, estados de progresso, interface terminal/desktop, notificações, intervalo entre avisos, falha de canal externo, continuidade, tarefas nativas, agentes, esforço de subagentes, perfis, temporizadores e preservação/restauração de configurações do Terminal.
 - Não houve chamada paga ao modelo ou acesso ao computador do usuário.
 
