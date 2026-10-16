@@ -1,5 +1,10 @@
 # Histórico de alterações
 
+## 0.2.4 — 2026-10-16
+
+- Colore as barras de consumo no painel e no rodapé: verde abaixo de 70%, amarelo a partir de 70% e vermelho a partir de 90%.
+- Mantém leituras ausentes em cor neutra e preserva as faixas de notificação configuradas.
+
 ## 0.2.3 — 2026-10-16
 
 - Restaura barras proporcionais de contexto e limites no painel e na linha de status.

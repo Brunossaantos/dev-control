@@ -153,3 +153,8 @@ export function meter(value: number | null | undefined, cells = 8): string {
   const filled = percent === 100 ? width : Math.floor(percent * width / 100)
   return `${'█'.repeat(filled)}${'░'.repeat(width - filled)} ${Math.round(percent)}%`
 }
+
+export function usageColor(value: number | null | undefined): string | undefined {
+  if (value == null || !Number.isFinite(value)) return undefined
+  return value >= 90 ? '#EF4444' : value >= 70 ? '#EAB308' : '#22C55E'
+}

@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'claude-code/testing'
-import { defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, jsonc, PALETTES, shade, meter } from '../hooks/domain'
+import { defaults, preferences, projectKey, bands, alerts, percentage, endPlan, steps, failure, numberLabel, remaining, jsonc, PALETTES, shade, meter, usageColor } from '../hooks/domain'
 import type { Plan } from '../types'
 
 describe('preferências e aparência', () => {
@@ -101,5 +101,19 @@ describe('barras de consumo', () => {
     expect(meter(null)).toBe('n/d')
     expect(meter(undefined)).toBe('n/d')
     expect(meter(NaN)).toBe('n/d')
+  })
+})
+
+describe('cores do consumo', () => {
+  test('verde abaixo de 70, amarelo a partir de 70 e vermelho a partir de 90', () => {
+    expect(usageColor(0)).toBe('#22C55E')
+    expect(usageColor(69.99)).toBe('#22C55E')
+    expect(usageColor(70)).toBe('#EAB308')
+    expect(usageColor(89.99)).toBe('#EAB308')
+    expect(usageColor(90)).toBe('#EF4444')
+    expect(usageColor(100)).toBe('#EF4444')
+    expect(usageColor(null)).toBeUndefined()
+    expect(usageColor(undefined)).toBeUndefined()
+    expect(usageColor(NaN)).toBeUndefined()
   })
 })
