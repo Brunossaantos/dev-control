@@ -1,5 +1,5 @@
 node_modules/
-.claude-plugin/types/
+.claude/
+plugins/*/.claude/types/
 plugins/*/.claude-plugin/types/
 *.log
-

@@ -1,17 +1,19 @@
-# Verificação — Dev Control 0.1.0
+# Verificação — Dev Control 0.2.1
 
-Executada no Linux com Claude Code 2.1.296, usando o validador e o executor de testes oficiais.
+Ambiente: Linux, Claude Code 2.1.296. Validação e testes executados pelas ferramentas oficiais do produto.
 
-- Validação estrita do plugin: aprovada, sem erros ou avisos.
-- Testes: **43 aprovados, 0 falhas**, em dois arquivos.
-- Marketplace: validação estrita aprovada.
-- Instalação local: registro do marketplace e instalação do plugin aprovados em configuração isolada.
-- Inclui testes das árvores de UI em terminal e desktop, alertas e ausência de repetição, reinício de janelas, compactação de contexto, perfis, atualização periódica, encerramento de timers, falha de notificação, preservação de resultados de ferramentas, Zen, subagentes e handoff.
-- Testes de canais usam os stubs oficiais do executor. Não houve chamada paga ao modelo, acesso a projetos do usuário ou publicação no GitHub.
+- Plugin e marketplace: validação estrita aprovada.
+- Instalação local da base 0.2.0: aprovada em configuração isolada; a versão 0.2.1 mantém o mesmo formato.
+- Verificação do pacote: sem referências ao autor/projeto anterior e sem arquivos de código idênticos aos da base anterior.
+- Testes: **34 aprovados, 0 falhas**, em dois arquivos escritos para esta implementação, incluindo atalhos em português e valores nativos de permissão.
+- Cobertura: preferências, cores, JSONC, faixas de consumo, renovações, compactação, estados de progresso, interface terminal/desktop, notificações, intervalo entre avisos, falha de canal externo, continuidade, tarefas nativas, agentes, esforço de subagentes, perfis, temporizadores e preservação/restauração de configurações do Terminal.
+- Não houve chamada paga ao modelo ou acesso ao computador do usuário.
 
-Ainda exige verificação física no ambiente final: aparência no terminal real, reprodução do som, notificação Windows/macOS/Linux, restrições da conta a function hooks e restauração de temas no Windows Terminal. O teste de árvores UI verifica comportamento e elementos; não é uma captura da pintura do aplicativo.
+Os testes de canais, arquivos, agentes e processos usam os substitutos de teste oficiais do executor. Ainda precisam de verificação física: aparência no terminal real, som, notificações do sistema e recarregamento de cores nas plataformas finais. Os testes de árvores de UI não equivalem a capturas da pintura real.
 
-Para repetir, na raiz do pacote:
+O pacote contém somente a implementação nova e sua documentação. Não inclui código-fonte de outro plugin, SDK copiado, binários do motor ou dependências de teste.
+
+Para repetir na raiz do pacote:
 
 ```sh
 claude plugin validate ./plugins/dev-control --strict

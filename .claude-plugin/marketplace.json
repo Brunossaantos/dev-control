@@ -1,17 +1,17 @@
 {
   "name": "dev-control-mods",
   "owner": {
-    "name": "Dev Control contributors"
+    "name": "Bruno"
+  },
+  "metadata": {
+    "description": "Painel universal em português para Claude Code: consumo, notificações, foco, temas, perfis e agentes."
   },
   "plugins": [
     {
       "name": "dev-control",
       "source": "./plugins/dev-control",
-      "description": "Usage monitoring, notifications, Zen, profiles, themes and agents.",
-      "version": "0.1.0"
+      "version": "0.2.1",
+      "description": "Painel universal em português para Claude Code: consumo, notificações, foco, temas, perfis e agentes."
     }
-  ],
-  "metadata": {
-    "description": "Universal Claude Code controls for usage, notifications, Zen, profiles, themes and agents."
-  }
+  ]
 }

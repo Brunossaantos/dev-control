@@ -1,9 +1,9 @@
 {
   "name": "dev-control",
-  "version": "0.1.0",
-  "description": "Universal Claude Code mod: usage alerts, terminal/sound/desktop notifications, honest Zen progress, project profiles, themes and an agent panel.",
+  "version": "0.2.1",
   "author": {
-    "name": "Dev Control contributors"
+    "name": "Bruno"
   },
+  "description": "Painel universal em português para Claude Code: consumo, notificações, foco, temas, perfis e agentes.",
   "types": "./types/index.d.ts"
 }

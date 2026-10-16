@@ -1,17 +1,20 @@
-# Changelog
+# Histórico de alterações
 
-## 0.1.0 — 2026-10-13
+## 0.2.1 — 2026-10-16
 
-- Added configurable terminal, sound and desktop notifications.
-- Added threshold alerts for conversation context and 5h/7d account windows.
-- Added deduplication, window/compaction reset handling and event cooldowns.
-- Added periodic and manual reading checks, timestamps and unavailable/stale states.
-- Added project/global profiles and session controls.
-- Added a panel backed by the engine agent list, with observed model, effort and result excerpts.
-- Added a handoff request button that preserves the current draft.
-- Corrected Zen progress at response end; kept failures visible and added detail expansion.
-- Preserved child agent effort by default and isolated child progress from the main task.
-- Added an explicit session-only option to override child effort.
-- Kept theme customization, model selection, native permission controls and status line.
-- Renamed plugin, command and marketplace to avoid collisions with extra-mods.
-- Added official-runner integration tests; no fixed workflow phases.
+- Interface, estados, níveis de esforço, notificações e documentação em português.
+- Atalhos em português para consumo, notificações, temas, modelo, perfis, agentes e continuidade.
+- Atalhos anteriores mantidos por compatibilidade; identificadores nativos da API preservados.
+- Instalação e atualização diretamente pelo repositório do GitHub.
+
+## 0.2.0 — 2026-10-13
+
+- Implementação nova com autoria do projeto atribuída a Bruno e assistência de IA declarada.
+- Novo painel, contrato de estado e organização do código.
+- Regras de alertas, deduplicação, cooldown e atualização periódica.
+- Notificações no terminal, som próprio e canais de sistema operacional.
+- Progresso por relato ou tarefas nativas, sem conclusão automática de etapas pendentes.
+- Perfis de projeto/globais e preservação do esforço dos subagentes por padrão.
+- Observação de agentes reais e preparação de continuidade no rascunho.
+- Seis paletas próprias, cores personalizadas e restauração do Windows Terminal.
+- Nova documentação e nova suíte de testes.

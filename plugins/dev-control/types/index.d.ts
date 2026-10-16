@@ -1,89 +1,26 @@
-export type Panel = 'main' | 'zen' | 'themes' | 'mode' | 'status' | 'notifications' | 'usage' | 'profiles' | 'agents'
-
-export type ZenTheme = 'blue' | 'dark' | 'light' | 'green' | 'rainbow' | 'custom'
-
-export type ZenColors = { bar: string; text: string; border: string }
-
-export type StepStatus = 'pending' | 'in_progress' | 'completed' | 'failed' | 'blocked'
-
-export type ZenOutcome = 'running' | 'completed' | 'waiting' | 'interrupted' | 'failed'
-
-export type ZenStep = { id: string; text: string; status: StepStatus }
-
-export type ZenTask = {
-  title: string
-  startedAt: number
-  doneAt: number | null
-  steps: ZenStep[]
-  outcome?: ZenOutcome
+export type Screen = 'home' | 'usage' | 'notices' | 'focus' | 'appearance' | 'model' | 'profiles' | 'agents'
+export type Level = 'low' | 'medium' | 'high' | 'xhigh' | 'max'
+export type Preferences = {
+  channels: { terminal: boolean; audio: boolean; desktop: boolean }
+  events: { context: boolean; account: boolean; response: boolean; failures: boolean; input: boolean }
+  levels: number[]; interval: number; cooldown: number
+  focus: boolean; details: boolean; effort: Level | null; workerEffort: boolean
+  model: string | null; palette: string | null; accent: string; background: string; foreground: string
 }
-
-export type ThemeEntry = { slug: string; name: string }
-
-export type Effort = 'low' | 'medium' | 'high' | 'xhigh' | 'max'
-
-export type RateLimit = { label: string; percent: number; resetsAt: number | null }
-
-// What the status line draws, refreshed after each model response and on a timer.
-export type StatusSnapshot = {
-  model: string
-  dir: string
-  branch: string
-  ctxPercent: number | null
-  ctxTokens: number | null
-  ctxWindow: number | null
-  limits: RateLimit[]
+export type Step = { id?: string; title: string; state: 'pending' | 'active' | 'done' | 'error' | 'blocked' }
+export type Plan = { title: string; steps: Step[]; state: 'working' | 'done' | 'waiting' | 'interrupted' | 'error'; started: number; stopped: number | null }
+export type Reading = { key: string; value: number | null; reset: string | null }
+export type Usage = { checked: number; model: string; directory: string; branch: string; tokens: number | null; window: number | null; readings: Reading[] }
+export type Worker = { id: string; name?: string; type: string; description: string; status: string; parentId?: string; model?: string; effort?: string; summary?: string }
+export type Palette = { id: string; label: string; accent: string; background: string; foreground: string }
+export type WindowsRestore = { path: string; profile: string; scheme: string; original: unknown }
+export type Dashboard = {
+  screen: Screen | null; prefs: Preferences; usage: Usage | null; root: string; profile: string
+  error: string; delivery: string; workers: Worker[]; workerError: string; selected: string | null; filter: string
+  plan: Plan | null; permission: string | null; busy: string | null; clock: number; windows: WindowsRestore | null; lastReply: number | null
 }
-
+export type SavedPreferences = { version: 2; root?: string; preferences: Preferences }
+export type AlertMemory = Record<string, { cycle: string; value: number; band: number }>
 declare module 'claude-code' {
-  interface PluginState {
-    'dev-control': {
-      controls: ControlState
-      effortForSubagents: boolean
-      menu: Panel | null
-      zenOn: boolean
-      zenTheme: ZenTheme
-      zenCustom: ZenColors
-      zenCollapsed: boolean
-      task: ZenTask | null
-      now: number
-      themes: ThemeEntry[]
-      themeName: string | null
-      themeQuery: string
-      themeStatus: string
-      effort: Effort | null
-      mode: string | null
-      defaultMode: string | null
-      preview: string | null
-      isDownloading: boolean
-      statusOn: boolean
-      status: StatusSnapshot | null
-      lastResponseAt: number | null
-      statusClock: number
-      sessionEffort: Effort | null
-      sessionModel: string | null
-      paneBg: string | null
-      defaultModeChosen: boolean
-    }
-  }
-}
-
-
-export type NoticeKind = 'usage' | 'finished' | 'error' | 'waiting'
-export type NoticeSettings = {
-  terminal: boolean; sound: boolean; desktop: boolean
-  context: boolean; limits: boolean; finished: boolean; errors: boolean; waiting: boolean
-  thresholds: number[]; refreshSeconds: number; cooldownSeconds: number
-}
-export type Metric = { id: string; label: string; percent: number; cycle: string }
-export type Ledger = Record<string, { cycle: string; previous: number; sent: number[] }>
-export type Profile = {
-  version: 1; root?: string; model: string | null; effort: Effort | null
-  zenOn: boolean; zenTheme: string; theme: string | null; notices: NoticeSettings
-}
-export type AgentRow = { id: string; description: string; type: string; status: string; parentId?: string; name?: string; spawnedBy?: string } & { model?: string; effort?: string; result?: string; startedAt?: number; endedAt?: number }
-export type ControlState = {
-  notices: NoticeSettings; usageAt: number | null; usageError: string | null
-  agents: AgentRow[]; agentsError: string | null; agentFilter: string; selectedAgent: string | null
-  details: boolean; root: string; profileScope: string; delivery: string; busy: boolean; refreshToken: string | null
+  interface PluginState { 'dev-control': { dashboard: Dashboard } }
 }

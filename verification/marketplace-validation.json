@@ -1,9 +1,9 @@
 {
   "success": true,
   "strict": true,
-  "target": "dev-control/.claude-plugin/marketplace.json",
+  "target": "/workspace/scratch/b624035ff82c/dev-control-independent/.claude-plugin/marketplace.json",
   "manifest": {
-    "file": "dev-control/.claude-plugin/marketplace.json",
+    "file": "/workspace/scratch/b624035ff82c/dev-control-independent/.claude-plugin/marketplace.json",
     "type": "marketplace",
     "errors": [],
     "warnings": [],

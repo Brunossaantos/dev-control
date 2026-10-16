@@ -1,138 +1,148 @@
 # Dev Control
 
-Painel universal para Claude Code: consumo, notificações, Zen, temas, perfis e agentes. Não impõe etapas ou um fluxo de desenvolvimento específico.
+**Versão 0.2.1 · Projeto de Bruno · desenvolvido com assistência de IA**
 
-## Instalação
+Um painel universal para acompanhar o Claude Code em qualquer projeto. Reúne consumo, notificações, progresso, perfis, temas e agentes, sem impor um processo de trabalho.
 
-Requer **Claude Code 2.1.296 ou superior**, com suporte a mods/function hooks habilitado. Essa API está em acesso antecipado; sua disponibilidade depende do Claude Code e da conta. O pacote foi validado e testado com 2.1.296.
+## Começar
 
-Extraia o ZIP. No PowerShell, entre na pasta `dev-control` extraída e execute:
+Requer **Claude Code 2.1.296 ou superior**, com suporte a mods/function hooks habilitado na conta. Essa API é de acesso antecipado e pode mudar entre versões.
+
+Para instalar diretamente deste repositório, execute:
 
 ```powershell
 claude --version
-claude plugin marketplace add .
+claude plugin marketplace add Brunossaantos/dev-control
 claude plugin install dev-control@dev-control-mods --scope user
 ```
 
-Abra uma nova sessão ou use `/reload-plugins`. Abra o painel pelo botão **◆ dev-control ▲** ou por `/dev-control`.
+Inicie uma sessão nova ou execute `/reload-plugins`. Abra pelo botão **◆ Dev Control** ou pelo comando `/dev-control`.
 
-Para experimentar sem instalar, na mesma pasta:
+Para experimentar sem instalar:
 
 ```powershell
 claude --plugin-dir ./plugins/dev-control
 ```
 
-O plugin tem nome, comando e marketplace próprios. Para evitar disputa pela mesma área de interface, desative extra-mods se estiver ativo:
+O uso do plugin não exige Node.js, npm ou Python separados. O som vem incluído no pacote.
 
-```powershell
-claude plugin disable extra-mods@jdsjh-mods --scope user
-```
+## Painel
 
-## O que está incluído
-
-| Seção | Função |
+| Seção | O que oferece |
 |---|---|
-| Usage monitor | Contexto, limites 5h/7d, horários de renovação, última consulta e atualização manual. |
-| Notifications | Avisos no terminal, som e notificação do sistema; canais e eventos independentes. |
-| Zen mode | Progresso por etapas, detalhes expansíveis e erros visíveis. |
-| Theme | Temas com prévia ao vivo, mantendo a integração original com Windows Terminal. |
-| Mode | Modelo, esforço, permissões nativas e opção de preservar esforço dos subagentes. |
-| Profiles | Salvar controles para um projeto ou como padrão global. |
-| Agents | Lista real do motor, estado, tarefa, modelo/esforço observados e trecho do resultado. |
-| Status line | Modelo, pasta, branch, contexto, limites e estimativa de idade do cache. |
+| Monitor de consumo | Contexto, tokens, limites de 5h/7d, horários de renovação e atualização manual. |
+| Notificações | Canais independentes para terminal, som e sistema operacional. |
+| Zen / foco | Plano por etapas com conclusão, espera, interrupção e erro. |
+| Temas | Seis paletas próprias e uma paleta personalizável. |
+| Modelo e permissões | Modelo, esforço e controles de permissão nativos. |
+| Perfis de projeto | Preferências por projeto ou globais. |
+| Monitor de agentes | Agentes reais, tarefas, estado, modelo, esforço e resultado observado. |
+
+A linha de status mostra contexto e limites, com modelo, pasta e ramificação Git quando há espaço. O plugin preserva o comando de status que o usuário já tenha configurado.
 
 ## Notificações
 
-Abra `/dev-control notifications`.
+Abra `/dev-control notificacoes`.
 
-- **Terminal notice**: aviso dentro do Claude Code; ligado por padrão.
-- **Sound**: som curto incluído no pacote; desligado por padrão.
-- **Desktop notification**: aviso do sistema; desligado por padrão.
-- **Context thresholds** e **5h / 7d thresholds**: ligados por padrão.
-- **Main response finished**: opcional, desligado por padrão; indica fim da resposta, não garante conclusão da tarefa.
-- **Tool / response errors** e **Waiting for input**: ligados por padrão.
-- **Thresholds**: de 1 a 6 porcentagens inteiras entre 1 e 100. Padrão `70, 85, 95`.
-- **Check readings**: intervalo mínimo de 15 a 300 segundos. O timer verifica a cada 15 segundos; padrão de consulta 30 segundos.
-- **Other event cooldown**: de 5 a 600 segundos; padrão 60. O cooldown é separado para erros, término e solicitação de entrada.
-- **Send test notification**: testa os canais selecionados e mostra o resultado no painel.
+Terminal, alertas de contexto/conta, erros e solicitação de entrada estão ligados por padrão. Som, aviso externo e aviso de resposta concluída estão desligados até você selecionar.
 
-Cada faixa de consumo avisa uma vez por janela e sessão. Ao saltar várias faixas, envia um aviso com a faixa mais alta. Nova janela ou queda significativa do contexto rearma os alertas. Leituras ausentes não são tratadas como zero.
+As faixas padrão são **70%, 85% e 95%**. Você pode configurar até seis porcentagens inteiras de 1 a 100. Ao saltar várias faixas, é enviado um único aviso com a faixa mais alta para cada métrica. O aviso não se repete dentro da mesma faixa; nova janela ou queda significativa de contexto rearma os alertas. Alterar as faixas também cria uma nova configuração de alertas.
 
-| Sistema | Notificação externa |
+O intervalo mínimo padrão é 30 segundos, configurável entre 15 e 300 segundos. Um temporizador de 15 segundos verifica quando é hora de consultar. O intervalo entre avisos de outros eventos é separado por tipo, de 5 a 600 segundos, com padrão de 60.
+
+Use **Testar os canais de notificação selecionados** para verificar cada canal. O painel informa falhas sem cancelar os outros canais.
+
+| Ambiente | Aviso externo |
 |---|---|
-| Windows | Balão do sistema via Windows PowerShell e ícone temporário na bandeja. |
-| macOS | `osascript` e permissão de notificações do sistema. |
-| Linux | `notify-send`, quando instalado e disponível em uma sessão gráfica. |
-| WSL | Tenta Windows PowerShell; depende da interoperabilidade e do ambiente Windows. |
+| Windows | Balão na bandeja via Windows PowerShell. |
+| macOS | Notificação via osascript. |
+| Linux | notify-send em uma sessão gráfica, se estiver disponível. |
+| WSL | Tenta usar Windows PowerShell pela interoperabilidade. |
 
-O sistema pode bloquear ou silenciar notificações. Aceitar o comando não comprova que o usuário viu o aviso. Falhas de um canal não desativam os demais. Nenhuma dependência de notificação é instalada automaticamente.
+O sistema operacional pode bloquear ou silenciar um aviso. O resultado “comando de notificação aceito” significa que o comando foi aceito, sem garantir que a notificação foi exibida. O plugin não instala ferramentas externas automaticamente.
 
-## Leituras e continuidade
+## Consumo e continuidade
 
-O contexto mede o tamanho da conversa; os limites 5h/7d medem uso da conta. Os limites vêm da última resposta API disponível ao motor. A consulta periódica relê esses dados; não é uma consulta externa de saldo.
+**Contexto** é o tamanho da conversa; **5h/7d** são limites da conta. Os dados da conta são os reportados na última resposta API disponível ao motor, não uma consulta externa de saldo. Leituras ausentes aparecem como indisponíveis. Falhas de consulta marcam os dados anteriores como possivelmente desatualizados.
 
-O plugin não calcula uma quantidade exata de mensagens restantes e não demonstra economia de tokens. `cache ~ok` / `~over` é uma estimativa por idade da última resposta, com janela de uma hora, não uma confirmação de cache hit.
+A consulta simples desses dados não inicia chamadas ao modelo. Não há estimativa exata de mensagens restantes nem promessa de economia de tokens. A idade de cache é uma estimativa a partir da última resposta observada, não comprova reutilização do cache.
 
-**Prepare handoff request**, em Usage monitor, preserva o rascunho e acrescenta uma solicitação de resumo de continuidade. Você envia com Enter. Não existe geração automática de resumos ou compactação automática.
+**Preparar solicitação de continuidade** acrescenta uma solicitação de resumo ao rascunho existente. Você decide enviar pressionando Enter. Não executa o modelo, não compacta a conversa nem altera arquivos automaticamente.
 
-## Zen
+## Progresso e agentes
 
-Somente etapas marcadas como concluídas contam no percentual. Ao terminar uma resposta, o painel diferencia conclusão, espera, interrupção e falha. Sem etapas, não há progresso calculável. O andamento informado pela IA não substitui resultados de testes.
+Ative Zen / foco para orientar o modelo a informar um plano. Somente etapas concluídas contam no percentual. Sem etapas, aparece `n/d`. O fim de uma resposta não conclui automaticamente um plano pendente. Erros e interrupções continuam visíveis; **Mostrar todos os detalhes das ferramentas** expande os detalhes normais.
 
-Erros, interrupções e comandos com código de saída não zero continuam visíveis. **Expand tool details** e **[show details]** exibem os detalhes normais. Os subagentes não sobrescrevem o plano principal.
+O plano também acompanha TodoWrite, TaskCreate e TaskUpdate do agente principal, após chamadas bem-sucedidas. Chamadas de subagentes não substituem o plano principal. O progresso informado pelo modelo precisa corresponder a verificações reais; não substitui os testes do projeto.
 
-## Perfis
+O monitor de agentes observa os registros do motor. Nunca inicia ou envia mensagens a agentes. Modelo, esforço e resultado só aparecem quando os respectivos eventos foram observados. Resultados são trechos de até 1.000 caracteres; são exibidos os últimos 12 registros que correspondem ao filtro. **Abrir /tasks nativo** abre o gerenciamento do Claude Code.
 
-Em **Profiles**, salve para o projeto atual ou como padrão global. No início de uma nova sessão, o perfil do projeto tem prioridade sobre o global.
+Por padrão, o esforço escolhido afeta apenas o agente principal. **Aplicar esforço também aos subagentes** permite estender a seleção aos subagentes de forma explícita.
 
-São guardados modelo, esforço do agente principal, Zen, tema escolhido e notificações. Os perfis ficam no armazenamento privado do plugin; não criam arquivos dentro do repositório do projeto. Remover um perfil não altera a sessão atual.
+## Preferências
 
-As permissões continuam usando os controles reais do Claude Code: Shift+Tab altera a sessão; o controle de modo padrão do menu modifica novas sessões. Nenhum perfil remove validações ou confirmações do motor.
+Em Perfis de projeto, salve para o projeto ou como padrão global. No início de uma sessão, o perfil do projeto prevalece sobre o global. Modelo, esforço, canais, eventos, faixas, Zen e paleta são salvos no armazenamento privado do plugin, sem criar arquivos no repositório do projeto. Remover um perfil salvo mantém a sessão atual.
 
-Temas preservam o comportamento do original: podem modificar `~/.claude/settings.json` e o perfil do Windows Terminal, com backup. Outras abas no mesmo perfil Windows Terminal podem acompanhar a mudança de cores. A opção para sobrescrever esforço dos subagentes é somente da sessão e fica desligada por padrão.
+Preferências da versão 0.1 não são importadas; configure e salve novamente no painel.
 
-## Agentes
+As permissões continuam sob controle do Claude Code. Shift+Tab muda a sessão atual. O seletor de padrão grava o modo para sessões futuras, preservando confirmações exigidas pelo motor. Perfis não guardam permissões.
 
-O painel observa agentes já iniciados pelo usuário ou pelo Claude. Não inicia agentes nem inventa percentuais. Modelo, esforço e trecho do resultado aparecem quando os eventos correspondentes foram observados nesta sessão. O resultado mostrado tem até 1.000 caracteres; `/tasks` oferece o gerenciamento nativo. A lista exibe os 12 últimos resultados do filtro.
+## Temas próprios
 
-## Comandos
+As paletas são **Oceano, Floresta, Violeta, Brasa, Papel e Grafite**. A paleta personalizada permite escolher destaque, fundo e texto com cores hexadecimais. Nenhum catálogo de temas é baixado.
 
-```text
-/dev-control
-/dev-control usage
-/dev-control notifications
-/dev-control zen
-/dev-control themes
-/dev-control mode
-/dev-control profiles
-/dev-control agents
-/dev-control handoff
+Os temas usam o formato nativo do Claude Code. Ao carregar um tema customizado pela primeira vez, reinicie uma vez; alterações seguintes podem ser recarregadas ao vivo. As preferências de tema do Claude ficam em `~/.claude/settings.json`, com cópia de segurança `.dev-control.bak`. **Restaurar tema anterior** restaura a escolha anterior.
+
+No Windows Terminal, o perfil identificado por WT_PROFILE_ID também recebe a paleta. Abas do mesmo perfil compartilham essas cores. Ao terminar a sessão, a paleta temporária do perfil é removida e a escolha anterior é restaurada, preservando outras configurações. O arquivo do Terminal também recebe uma cópia de segurança. Se o perfil já estiver sob controle de outra sessão do Dev Control, a alteração externa é evitada. O tema nativo do Claude é uma preferência global e pode ser compartilhado entre sessões.
+
+## Atualizar uma instalação anterior
+
+Para migrar uma instalação antiga ou uma origem local para este repositório, execute:
+
+```powershell
+claude plugin uninstall dev-control@dev-control-mods --scope user
+claude plugin marketplace remove dev-control-mods
+claude plugin marketplace add Brunossaantos/dev-control
+claude plugin install dev-control@dev-control-mods --scope user
 ```
 
-## Atualizar ou remover
+Reinicie a sessão após a instalação.
 
-Mantenha a pasta extraída no mesmo local. Depois de substituir os arquivos por uma versão nova, atualize o marketplace e o plugin:
+Nas próximas atualizações:
 
 ```powershell
 claude plugin marketplace update dev-control-mods
 claude plugin update dev-control@dev-control-mods
 ```
 
-Para remover:
+Inicie uma nova sessão ou use `/reload-plugins`.
 
-```powershell
-claude plugin uninstall dev-control@dev-control-mods --scope user
+## Comandos
+
+```text
+/dev-control
+/dev-control consumo
+/dev-control notificacoes
+/dev-control zen
+/dev-control temas
+/dev-control modelo
+/dev-control perfis
+/dev-control agentes
+/dev-control continuidade
 ```
 
-## Desenvolvimento e créditos
+## Desenvolvimento
 
-Não exige npm ou Python para usar o plugin. O script Python em `statusline/` é a versão independente herdada do projeto original e não implementa os novos recursos do mod.
+A implementação usa a API oficial do Claude Code. O código de comportamento está em `hooks/main.tsx`; regras puras estão em `hooks/domain.ts`; o contrato público fica em `types/index.d.ts`.
 
 ```powershell
 claude plugin validate ./plugins/dev-control --strict
 claude plugin test ./plugins/dev-control
+claude plugin validate . --strict
 ```
 
-Para TypeScript, gere as declarações atuais com `/plugin-types` no Claude Code e ajuste o include de `tsconfig.json` se o motor gravá-las em outro local. As declarações da API de acesso antecipado devem corresponder à sua versão.
+Para usar TypeScript, gere as declarações da API com `/plugin-types` no Claude Code e ajuste o include do tsconfig ao caminho gerado pela sua versão.
 
-Baseado em [ClaudeMods](https://github.com/Jhonatan-de-Souza/ClaudeMods), de Jhonatan de Souza. Veja [NOTICE.md](NOTICE.md), [CHANGELOG.md](CHANGELOG.md) e [VERIFICACAO.md](VERIFICACAO.md).
+Consulte [AUTORIA.md](AUTORIA.md), [CHANGELOG.md](CHANGELOG.md) e [VERIFICACAO.md](VERIFICACAO.md).
+
+Os atalhos antigos em inglês continuam aceitos por compatibilidade. Os comandos do Claude Code, nomes de modelos e identificadores da API mantêm seus nomes nativos. Textos de tarefas e resultados fornecidos por outros agentes são exibidos como recebidos.

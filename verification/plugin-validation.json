@@ -1,0 +1,106 @@
+{
+  "success": true,
+  "strict": true,
+  "target": "/workspace/scratch/b624035ff82c/dev-control-independent/plugins/dev-control/.claude-plugin/plugin.json",
+  "manifest": {
+    "file": "/workspace/scratch/b624035ff82c/dev-control-independent/plugins/dev-control/.claude-plugin/plugin.json",
+    "type": "plugin",
+    "errors": [],
+    "warnings": [],
+    "notes": [
+      "types ./types/index.d.ts declares on $: nothing (no EngineInterface member)",
+      "types ./types/index.d.ts declares state: dev-control.dashboard"
+    ],
+    "gatingHooks": []
+  },
+  "contents": [
+    {
+      "file": "/workspace/scratch/b624035ff82c/dev-control-independent/plugins/dev-control/hooks/hooks.json",
+      "type": "hooks",
+      "errors": [],
+      "warnings": [],
+      "notes": [
+        "./main.tsx hooks: session.start, session.end, command.run{command=dev-control}, ui.render{component=Pane, requestId=dc-dashboard}, ui.close{id=dc-dashboard}, ui.render{component=PromptHint}, ui.render{component=AbovePrompt}, ui.render{component=ToolUse}, ui.render{component=ToolResult}, ui.render{component=ToolGroup}, prompt.submit, tool.call{tool=mcp__dev-control__progress_report}, tool.call{tool=TodoWrite}, tool.call{tool=TaskCreate}, tool.call{tool=TaskUpdate}, tool.call, agent.spawn, turn.step, turn.complete, classic.Notification, classic.UserPromptSubmit",
+        "./main.tsx answers its own command: command.run{command=dev-control}",
+        "./main.tsx gating hook with .catch: ui.close{id=dc-dashboard}",
+        "./main.tsx gating hook with .catch: prompt.submit",
+        "./main.tsx gating hook without .catch: tool.call{tool=mcp__dev-control__progress_report}",
+        "./main.tsx gating hook with .catch: tool.call{tool=TodoWrite}",
+        "./main.tsx gating hook with .catch: tool.call{tool=TaskCreate}",
+        "./main.tsx gating hook with .catch: tool.call{tool=TaskUpdate}",
+        "./main.tsx gating hook without .catch: tool.call",
+        "./main.tsx gating hook without .catch: agent.spawn",
+        "./main.tsx gating hook without .catch: classic.Notification",
+        "./main.tsx gating hook with .catch: classic.UserPromptSubmit",
+        "./main.tsx calls: $.agent.list (via collectWorkers), $.audio.play (via notice), $.clock.every, $.clock.now (via clock), $.command.register, $.command.run (via changeModel, drawPanel), $.env.get (via desktop, home, windowsAppearance), $.fs.exists (via applyAppearance, readJson, setDefaultPermission, windowsAppearance), $.fs.read (via applyAppearance, readJson, setDefaultPermission, windowsAppearance), $.fs.write (via applyAppearance, setDefaultPermission, windowsAppearance, writeJson), $.process.run (via desktop, measure), $.prompt.fill (via continuity), $.prompt.read (via continuity), $.session.cwd (via measure, root), $.session.id (via measure, notice, windowsAppearance), $.session.model (via measure, restorePreferences), $.session.root (via root), $.session.usage (via measure), $.state.get, $.state.set, $.store.delete (via applyAppearance, forgetPreferences), $.store.get (via applyAppearance, measure, notice, restorePreferences), $.store.set (via applyAppearance, measure, notice, sav… [+108 chars]",
+        "./main.tsx env writes: nothing",
+        "./main.tsx env reads: HOME, LOCALAPPDATA, OS, USERPROFILE, WSL_DISTRO_NAME, WT_PROFILE_ID",
+        "./main.tsx state writes: dev-control.dashboard",
+        "./main.tsx state reads: dev-control.dashboard"
+      ],
+      "gatingHooks": [
+        {
+          "module": "./main.tsx",
+          "pattern": "ui.close",
+          "hook": "ui.close{id=dc-dashboard}",
+          "hasCatch": true
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "prompt.submit",
+          "hook": "prompt.submit",
+          "hasCatch": true
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=mcp__dev-control__progress_report}",
+          "hasCatch": false
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TodoWrite}",
+          "hasCatch": true
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TaskCreate}",
+          "hasCatch": true
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call{tool=TaskUpdate}",
+          "hasCatch": true
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "tool.call",
+          "hook": "tool.call",
+          "hasCatch": false
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "agent.spawn",
+          "hook": "agent.spawn",
+          "hasCatch": false
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "classic.Notification",
+          "hook": "classic.Notification",
+          "hasCatch": false
+        },
+        {
+          "module": "./main.tsx",
+          "pattern": "classic.UserPromptSubmit",
+          "hook": "classic.UserPromptSubmit",
+          "hasCatch": true
+        }
+      ]
+    }
+  ],
+  "advice": []
+}
